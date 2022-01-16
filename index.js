@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.static('public'));
 
 // *** 路由定義開始 :BEGIN
 app.get('/',(req,res)=>{
