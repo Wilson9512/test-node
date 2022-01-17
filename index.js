@@ -27,11 +27,10 @@ app.get('/json-sales',(req,res) =>{
     // console.log(sales);
     // res.json(sales);
 res.render('json-sales',{sales});//將路由名稱取為樣板名
-
-})
-
-
-
+});
+app.get('/try-qs',(req,res) =>{
+    res.json(req.query);
+});
 
 
 // *** 路由定義結束:END
