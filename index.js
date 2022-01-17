@@ -37,9 +37,17 @@ app.get('/try-qs',(req,res) =>{
 });
 
 
-//用在post 當第二個參數 第三個才是處理器/回呼函式
+//中介函式用在post 當第二個參數 第三個才是處理器/回呼函式
 //express會判斷Content-Type現在需要哪個middleware處理
 app.post('/try-post',(req,res) =>{
+    res.json(req.body);
+});
+
+app.get('/try-post-form',(req,res) =>{
+    res.render('try-post-form');
+});
+
+app.post('/try-post-form',(req,res) =>{
     res.json(req.body);
 });
 
