@@ -1,0 +1,18 @@
+
+
+GET http://localhost:3001/try-qs?a[age]=20&a[name]=sam
+
+###
+
+POST http://localhost:3001/try-post
+Content-Type: application/x-www-form-urlencoded
+
+name=Ivan&gender=male
+
+###
+POST http://localhost:3001/try-post
+Content-Type: application/json
+
+{"name":"flora","gender":"female"}
+
+###

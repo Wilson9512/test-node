@@ -13,7 +13,6 @@ app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 
 // *** 路由定義開始 :BEGIN
 
-
 app.get('/', (req, res) => {
 
     //res.send(`<h2>Hello</h2>`)
@@ -28,10 +27,17 @@ app.get('/json-sales',(req,res) =>{
     // res.json(sales);
 res.render('json-sales',{sales});//將路由名稱取為樣板名
 });
+
+//拿到中介函式/軟體
+const urluncodedParser = express.urlencoded({extended: false});
+const jsonParser = express.json();
+//用在post 當第二個參數 第三個才是處理器/回呼函式
+app.post('/try-post',[urluncodedParser,jsonParser],(req,res) =>{
+    res.json(req.body);
+});
 app.get('/try-qs',(req,res) =>{
     res.json(req.query);
 });
-
 
 // *** 路由定義結束:END
 
