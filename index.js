@@ -5,16 +5,18 @@ const express = require('express');
 const app = express();
 
 app.set('view engine', 'ejs');
+
 app.use(express.static('public'));
 app.use('/jquery', express.static('node_modules/jquery/dist'));
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 
+
 // *** 路由定義開始 :BEGIN
 app.get('/', (req, res) => {
+
     //res.send(`<h2>Hello</h2>`)
     res.render('home',{name:'Wil'})
 });//路徑跟方法
-
 
 // *** 路由定義結束:END
 
