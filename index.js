@@ -12,11 +12,28 @@ app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 
 
 // *** 路由定義開始 :BEGIN
+
+
 app.get('/', (req, res) => {
 
     //res.send(`<h2>Hello</h2>`)
     res.render('home',{name:'Wil'})
 });//路徑跟方法
+
+
+app.get('/json-sales',(req,res) =>{
+    const sales = require('./data/sales');
+
+    console.log(sales);
+
+    res.json(sales);
+
+
+})
+
+
+
+
 
 // *** 路由定義結束:END
 
