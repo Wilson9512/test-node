@@ -24,10 +24,9 @@ app.get('/', (req, res) => {
 app.get('/json-sales',(req,res) =>{
     const sales = require('./data/sales');
 
-    console.log(sales);
-
-    res.json(sales);
-
+    // console.log(sales);
+    // res.json(sales);
+res.render('json-sales',{sales});//將路由名稱取為樣板名
 
 })
 
