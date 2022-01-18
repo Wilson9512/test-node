@@ -5,19 +5,20 @@
     <div class="row">
         <div class="col-md-6">
             <form method="post">
+                <!--樣板呈現變數值如果沒有定義的話要怎麼處理-->
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
                     <input type="text" class="form-control" id="email" name="email">
-                    <% if (typeof email !=="undefined"){ %>
-                    <div class="form-text"><%= email %></div>
+                    <% if (typeof email !== "undefined"){ %>
+                        <div class="form-text"><%= email %></div>
                     <% } %>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password">
-                    <% if (typeof password !=="undefined"){ %>
-                    <div class="form-text"><%= password %></div>
+                    <% if (locals.password){ %>
+                        <div class="form-text"><%= password %></div>
                     <% } %>
                 </div>
 
