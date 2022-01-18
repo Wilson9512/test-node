@@ -44,11 +44,11 @@ app.post('/try-post',(req,res) =>{
 });
 
 app.get('/try-post-form',(req,res) =>{
-    res.render('try-post-form');
+    res.render('try-post-form',{email:'',password:''});
 });
 
 app.post('/try-post-form',(req,res) =>{
-    res.json(req.body);
+    res.render('try-post-form',req.body);
 });
 
 // *** 路由定義結束:END
