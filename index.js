@@ -51,6 +51,10 @@ app.post('/try-post-form',(req,res) =>{
     res.render('try-post-form',req.body);
 });
 
+app.get('pending',(req,res) =>{
+});
+
+
 // *** 路由定義結束:END
 
 //設定404頁面
