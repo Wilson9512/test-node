@@ -1,6 +1,8 @@
 require('dotenv').config();//載入 .env的設定
 
 const express = require('express');
+const multer = require('multer');
+const upload = multer({dest:'tmp_uploads/'});
 
 const app = express();
 
@@ -23,10 +25,8 @@ app.get('/', (req, res) => {
     res.render('home',{name:'Wil'})
 });//路徑跟方法
 
-
 app.get('/json-sales',(req,res) =>{
     const sales = require('./data/sales');
-
     // console.log(sales);
     // res.json(sales);
 res.render('json-sales',{sales});//將路由名稱取為樣板名
@@ -35,7 +35,6 @@ res.render('json-sales',{sales});//將路由名稱取為樣板名
 app.get('/try-qs',(req,res) =>{
     res.json(req.query);
 });
-
 
 //中介函式用在post 當第二個參數 第三個才是處理器/回呼函式
 //express會判斷Content-Type現在需要哪個middleware處理
@@ -54,6 +53,10 @@ app.post('/try-post-form',(req,res) =>{
 app.get('pending',(req,res) =>{
 });
 
+app.post('/try-upload', upload.single('avatar'), (req, res) => {
+//avatar是上傳單個檔案的欄位名稱 //用postman測試
+    res.json(req.file);
+});
 
 // *** 路由定義結束:END
 
