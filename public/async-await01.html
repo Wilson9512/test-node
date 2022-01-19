@@ -10,7 +10,7 @@
 
 
     function myPromise(p) {
-        new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const rnd = 300 + Math.floor(Math.random() * 1000);
             setTimeout(() => {
                 resolve({p, rnd});

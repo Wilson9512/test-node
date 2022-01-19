@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+
+    function myPromise(p) {
+       return new Promise((resolve, reject) => {
+            const rnd = 300 + Math.floor(Math.random() * 1000);
+            setTimeout(() => {
+                resolve({p, rnd});
+            }, rnd);
+        });
+    }
+
+    (async () => {
+        const str = 'say-hello--';
+        for (let i = 0; i < str.length; i++) {
+            console.log(await myPromise(str[i]));
+        }
+    })();//直接呼叫
+
+    (async ()=> {
+        const r1 = await myPromise('wil');
+        console.log(r1);
+        const r2 = await myPromise('peter');
+        console.log(r2);
+        const r3 = await myPromise('david');
+        console.log(r3);
+        const r4 = await myPromise('arron');
+        console.log(r4);
+    })();
+
+
+
+</script>
+</body>
+</html>
