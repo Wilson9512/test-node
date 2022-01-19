@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script>
+
+
+    function myPromise (p){
+        new Promise((resolve, reject)=>{
+            const rnd = 300 + Math.floor(Math.random()*1000);
+            setTimeout(()=>{
+                resolve({p, rnd});
+            },rnd);
+        });
+    }
+
+    myPromise('wil ')
+        .then(r => {
+            console.log(r);
+            return myPromise('peter');
+        })
+        .then(r => {
+            console.log(r);
+            return myPromise('david');
+        })
+        .then(r => {
+            console.log(r);
+            return myPromise('arron');
+        })
+        .then(r => {
+            console.log(r);
+        })//要放catch放最後面可以接很多個
+
+
+
+
+</script>
+
+
+</body>
+</html>
