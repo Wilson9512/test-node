@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非同步操作</title>
+</head>
+<body>
+
+<script>
+
+
+    function myPromise(p) {
+        new Promise((resolve, reject) => {
+            const rnd = 300 + Math.floor(Math.random() * 1000);
+            setTimeout(() => {
+                resolve({p, rnd});
+            }, rnd);
+        });
+    }
+
+    async function func(){
+        const r1 = await myPromise('wil');
+        console.log(r1);
+        const r2 = await myPromise('peter');
+        console.log(r2);
+        const r3 = await myPromise('david');
+        console.log(r3);
+        const r4 = await myPromise('arron');
+        console.log(r4);
+    }
+
+    func();
+    console.log('end');
+
+
+</script>
+
+
+</body>
+</html>
