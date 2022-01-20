@@ -2,8 +2,9 @@ require('dotenv').config();//載入 .env的設定
 
 const express = require('express');
 const multer = require('multer');
-const upload = multer({dest: 'tmp_uploads/'});
 const fs = require('fs').promises;
+const upload = multer({dest: 'tmp_uploads/'});
+const uploadImg = require('./modules/upload-images');
 
 const app = express();
 
@@ -23,7 +24,7 @@ app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 app.get('/', (req, res) => {
 
     //res.send(`<h2>Hello</h2>`)
-    res.render('home', {name: 'Wil'})
+    res.render('home', {name: 'Wil'});
 });//路徑跟方法
 
 app.get('/json-sales', (req, res) => {
@@ -69,6 +70,9 @@ app.post('/try-upload', upload.single('avatar'), async (req, res) => {
         res.json({success: false, error: '格式不對'});
     }
 });
+app.post('/try-upload2', uploadImg.single('avatar'), async (req, res) => {
+    res.json(req.file);
+});
 
 // *** 路由定義結束:END
 
@@ -79,7 +83,8 @@ app.use((req, res) => {
 
 
 let port = process.env.PORT || 3000;
+const node_env = process.env.NODE_ENV || 'development';
 app.listen(port, () => {
-    console.log(`NODE_ENV:${process.env.NODE_ENV}`);
-    console.log(`啟動:${port}`, new Date());
+    console.log(`NODE_ENV:${node_env}`);
+    console.log(`啟動: ${port}`, new Date());
 });
