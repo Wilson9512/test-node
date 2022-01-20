@@ -6,15 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 
 </head>
 <body>
 <div class="container">
-    <form method="post" onsubmit="return false">
+    <form name="fake_form" onsubmit="return false">
         <img src="" alt="" width="300px" id="img01">
-        <button type="botton" class="btn btn-success">選擇照片</button>
-
+        <button type="botton" class="btn btn-success" onclick="avatar.click()">選擇照片</button>
 
         <div class="mb-3">
             <label for="my_img" class="form-label">image</label>
@@ -24,7 +23,7 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
-<!--這個表單只做檔案的上傳-->
+    <!--這個表單只做檔案的上傳-->
     <form name="form1" style="display: none">
         <input type="file" id="avatar" name="avatar">
     </form>
@@ -32,8 +31,20 @@
 
 
 <script>
-    const avatar = document.querySelector("#avatar");
 
+    const avatar = document.querySelector("#avatar");
+    //上傳
+    avatar.addEventListener('change', async event=>{
+        const fd = new FormData(document.form1);
+        const res = await fetch('/try-upload2', {
+            method: 'POST',
+            body: fd
+        });
+        //回應:後端回應的結果
+        const obj = await res.json();
+        document.querySelector('#img01').src = '/img/' + obj.filename;
+        document.fake_form.my_img.value = obj.filename;
+    });
 
 </script>
 </body>
