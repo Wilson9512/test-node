@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+</head>
+<body>
+<div class="container">
+    <form method="post" onsubmit="return false">
+        <img src="" alt="" width="300px" id="img01">
+        <button type="botton" class="btn btn-success">選擇照片</button>
+
+
+        <div class="mb-3">
+            <label for="my_img" class="form-label">image</label>
+            <input type="text" class="form-control" id="my_img" name="my_img">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+<!--這個表單只做檔案的上傳-->
+    <form name="form1" style="display: none">
+        <input type="file" id="avatar" name="avatar">
+    </form>
+</div>
+
+
+<script>
+    const avatar = document.querySelector("#avatar");
+
+
+</script>
+</body>
+</html>
