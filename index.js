@@ -52,7 +52,7 @@ app.post('/try-post-form', (req, res) => {
     res.render('try-post-form', req.body);
 });
 
-app.get('pending', (req, res) => {
+app.get('/pending', (req, res) => {
 });
 
 app.post('/try-upload', upload.single('avatar'), async (req, res) => {
@@ -78,6 +78,11 @@ app.post('/try-upload2', uploadImg.single('avatar'), async (req, res) => {
 app.post('/try-upload3', uploadImg.array('photo', 10), async (req, res) => {
     res.json(req.files);
 });
+
+app.get('/my-params1/:action?/:id?', (req, res) => {
+    res.json(req.params);
+});
+
 
 // *** 路由定義結束:END
 
