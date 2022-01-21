@@ -79,8 +79,19 @@ app.post('/try-upload3', uploadImg.array('photo', 10), async (req, res) => {
     res.json(req.files);
 });
 
-app.get('/my-params1/:action?/:id?', (req, res) => {
+//加反斜線是要跳脫\d
+app.get('/my-params1/:action?/:id(\\d+)?', (req, res) => {
     res.json(req.params);
+});
+
+app.get(/^\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res) => {
+    let u = req.url.split('?')[0];//url的?後面參數都不要
+    u.slice(3);
+    u = u.split('-').join('');
+    res.json({
+        url: req.url,
+        mobile: u
+    });
 });
 
 
