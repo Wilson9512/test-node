@@ -94,6 +94,7 @@ app.get(/^\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res) => {
     });
 });
 
+app.use(require('./routes/admin2'));//路由模組：當中介器require來用
 
 // *** 路由定義結束:END
 
