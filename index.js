@@ -3,6 +3,7 @@ require('dotenv').config();//載入 .env的設定
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs').promises;
+const session = require('express-session');
 const upload = multer({dest: 'tmp_uploads/'});
 const uploadImg = require('./modules/upload-images');
 
@@ -10,7 +11,18 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-//拿到中介函式/軟體//放在此處變Top-level middleware 像過濾器或是閘門
+//拿到中介函式/軟體//放在此處變Top-level middleware 像過濾器或是閘門//use是不管什麼方法都接收
+app.use(session({
+    //初始化設定:新用戶沒有用到session時要不要建立session跟發送cookie
+    saveUninitialized: false,
+    //沒有變更要不要強制回存
+    resave: false,
+    secret:'ewqwsdcfdrghnjuk;99wet34kmqaz',
+    cookie:{
+        //設定用戶cookie什麼時候過期
+        maxAge: 1200000, //20分鐘--ms
+    }
+}))
 app.use(express.urlencoded({extended: false}));//use是所有的方法都會進來
 app.use(express.json());
 app.use(express.static('public'));
@@ -18,10 +30,15 @@ app.use(express.static('public'));
 app.use('/jquery', express.static('node_modules/jquery/dist'));
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist'));
 
+app.use((req,res,next)=>{
+    res.locals.title = '小網站';
+    next();
+});
 
 // *** 路由定義開始 :BEGIN
 
 app.get('/', (req, res) => {
+    res.locals.title = '首頁 -' + res.locals.title;
 
     //res.send(`<h2>Hello</h2>`)
     res.render('home', {name: 'Wil'});
@@ -56,7 +73,7 @@ app.get('/pending', (req, res) => {
 });
 
 app.post('/try-upload', upload.single('avatar'), async (req, res) => {
-//avatar是上傳單個檔案的欄位名稱 //用postman測試
+//avatar是上傳單個檔案的欄位名稱 //用postman測試 //promise不要用try catch
     if (req.file && req.file.mimetype === 'image/jpeg') {
         try {
             //promise物件await放在這邊 async放在handler前面
@@ -95,6 +112,15 @@ app.get(/^\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res) => {
 });
 
 app.use(require('./routes/admin2'));//路由模組：當中介器require來用
+app.use('/admin3',require('./routes/admin3'));//路由模組：當中介器require來用
+
+app.get('/try-sess',(req,res)=>{
+    //自定一個參數名:不能叫cookie
+    req.session.myVar = req.session.myVar || 0;
+    req.session.myVar++;
+
+    res.json(req.session);
+});
 
 // *** 路由定義結束:END
 
