@@ -4,6 +4,7 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs').promises;
 const session = require('express-session');
+const moment = require('moment-timezone');
 const upload = multer({dest: 'tmp_uploads/'});
 const uploadImg = require('./modules/upload-images');
 
@@ -124,6 +125,14 @@ app.get('/try-sess',(req,res)=>{
     res.json(req.session);
 });
 
+app.get('/try-moment',(req,res)=>{
+    const fm = 'YYYY-MM-DD HH:mm:ss';
+
+    res.json({
+        m1: moment().format(fm),
+        m2: moment().tz('Europe/Dublin').format(fm),
+    });
+});
 // *** 路由定義結束:END
 
 //設定404頁面
