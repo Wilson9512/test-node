@@ -11,8 +11,8 @@ const storage  = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, __dirname + '/../public/img')//整個用戶都看得到,要做分層要處理session
     },
-    filename: (req, file, cd) => {
-        cd(null, uuidv4() + extMap[file.mimetype]);
+    filename: (req, file, cb) => {
+        cb(null, uuidv4() + extMap[file.mimetype] );
     },
 });
 
