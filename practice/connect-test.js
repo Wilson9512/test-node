@@ -9,8 +9,10 @@ const connection = mysql.createConnection({
     database: process.env.DB_NAME,
 });
 
+
 connection.query(
-    "SELECT * FROM address_book LIMIT 5",
+    "SELECT * FROM member LIMIT 5",
     (error, r) => {
-    console.log(r);
-});
+        console.log(r);
+        process.exit();
+    });
