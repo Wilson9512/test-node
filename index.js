@@ -4,10 +4,12 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs').promises;
 const session = require('express-session');
+const MysqlStore = require('express-mysql-session')(session);//require('express-mysql-session')是一個function
 const moment = require('moment-timezone');
 const upload = multer({dest: 'tmp_uploads/'});
 const uploadImg = require('./modules/upload-images');
 const db = require('./modules/connect-mysql');
+const sessionStore = new MysqlStore({}, db);//object本來要設定連線資料庫的設定,現在可以透過套件直接連線到資料庫了
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use(session({
     //沒有變更要不要強制回存
     resave: false,
     secret:'fd99wet3zws',
+    store: sessionStore,
     cookie:{
         //設定用戶cookie什麼時候過期
         maxAge: 1200000, //20分鐘--ms
