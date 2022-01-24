@@ -7,6 +7,7 @@ const session = require('express-session');
 const moment = require('moment-timezone');
 const upload = multer({dest: 'tmp_uploads/'});
 const uploadImg = require('./modules/upload-images');
+const db = require('./modules/connect-mysql');
 
 const app = express();
 
@@ -132,6 +133,16 @@ app.get('/try-moment',(req,res)=>{
         m1: moment().format(fm),
         m2: moment().tz('Europe/Dublin').format(fm),
     });
+});
+
+app.get('/try-db', async (req,res)=>{
+    //問號跟php一樣是為了避免sql injection
+    const [r] = await db.query(
+        "SELECT * FROM member WHERE `member_name` LIKE ?",
+        [
+            '%E%'
+        ]);
+    res.json(r);
 });
 // *** 路由定義結束:END
 
