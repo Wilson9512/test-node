@@ -1,4 +1,3 @@
-//類別裡面定義的function就算是物件的方法
 class Person {
     constructor(name = 'noname' , age = 0){
         this.name = name;
@@ -20,7 +19,9 @@ class Person {
     }
 }
 
+console.log('./person.mjs');
+export const f6 = a => a*a*a;
 // const p1 = new Person('W', 23);
 // console.log(p1.sayHello())
 
-module.exports = Person;
+export default Person;
