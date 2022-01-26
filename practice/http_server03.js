@@ -1,13 +1,23 @@
-require('dotenv').config();//載入 .env的設定
-
 const http = require('http');
+const fs = require('fs');
 
-const server = http.createServer((req,res)=>{
-    res.writeHead(200,{
-        'Content-Type':'text/html'
-    })
-    res.end(`<p>POST : ${process.env.POST}</p>`);
+
+const server = http.createServer((req, res)=>{
+
+    fs.readFile(__dirname + '/headers.txt', (error, data) => {
+        if(error){
+            console.log(error);
+            res.end('錯誤');
+        } else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(data);
+        }
+    });
 
 });
-console.log(`POST : ${process.env.POST}`);
-server.listen(process.env.POST);
+
+server.listen(3000);
+
+
