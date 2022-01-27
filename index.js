@@ -6,7 +6,7 @@ const fs = require('fs').promises;
 const session = require('express-session');
 const MysqlStore = require('express-mysql-session')(session); //require('express-mysql-session')是一個function
 const moment = require('moment-timezone');
-const upload = multer({dest: 'tmp_uploads/'});
+const upload = multer({dest: 'tmp_uploads/'});//上傳目的地設定
 const uploadImg = require('./modules/upload-images');
 const db = require('./modules/connect-mysql');
 const sessionStore = new MysqlStore({}, db); //object本來要設定連線資料庫的設定,現在可以透過套件直接連線到資料庫了
@@ -15,7 +15,8 @@ const app = express();
 
 app.set('view engine', 'ejs');//設定(set)樣版引擎,使用views資料夾名不用另外設定
 
-//拿到中介函式/軟體//放在此處變Top-level middleware 像過濾器或是閘門//use是不管什麼方法都接收
+//Top-level middleware
+//拿到中介函式/軟體//像過濾器或是閘門//use是不管什麼方法都接收
 app.use(session({
     name:'mySessionId',
     saveUninitialized: false, //初始化設定:新用戶沒有用到session時要不要建立session跟發送cookie
@@ -27,8 +28,9 @@ app.use(session({
         maxAge: 1800000, //30分鐘--ms
     },
 }));
+// const urlencodedParser = express.urlencoded({extended: false});
 app.use(express.urlencoded({extended: false}));//use是所有的方法都會進來
-app.use(express.json());
+app.use(express.json());//如果http body 送的是json 這個會負責解析json
 app.use(express.static('public'));//靜態內容資料夾設定
 
 app.use('/jquery', express.static('node_modules/jquery/dist'));
@@ -48,9 +50,17 @@ app.get('/', (req, res) => {
 });//路徑跟方法
 
 app.get('/json-sales', (req, res) => {
-    const sales = require('./data/sales');
+    const sales = require('./data/sales');//進來變成陣列
     // console.log(sales);
-    // res.json(sales);
+    // res.json(sales[0].name);//要輸入數字要加''
+    /* 排序
+    req.query.orderByCol=age;
+    const col = 'age';
+    col.sort((a,b)=>{
+    });
+    req.query.orderByRule=desc;
+    */
+    const orderByRule = req.query.orderByCol='desc';
     res.render('json-sales', {sales});//將路由名稱取為樣板名
 });
 
@@ -59,14 +69,13 @@ app.get('/try-qs', (req, res) => {
 });
 //中介函式用在post 當第二個參數 第三個才是處理器/回呼函式
 //express會判斷Content-Type現在需要哪個middleware處理
-app.post('/try-post', (req, res) => {
+app.post('/try-post',  (req, res) => {
     res.json(req.body);
 });
 
 app.get('/try-post-form', (req, res) => {
-    res.render('try-post-form', {email: '', password: ''});
+    res.render('try-post-form', {email: '', passworwd: ''});
 });
-
 app.post('/try-post-form', (req, res) => {
     res.render('try-post-form', req.body);
 });
