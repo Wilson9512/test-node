@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<button onclick="sendData()">send</button>
+
+<script>
+    const name = "wilson";
+    const gender = "mail";
+    const age = "26";
+
+    function sendData() {
+        fetch('/try-post', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `name=${name}&age=${age}&gender=${gender}`
+        })
+            .then(r => r.json())
+            .then(obj => {
+                console.log(obj);
+            })
+    }
+
+</script>
+</body>
+</html>
