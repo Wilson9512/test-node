@@ -4,12 +4,12 @@ const express = require('express');
 const multer = require('multer');
 const fs = require('fs').promises;
 const session = require('express-session');
-const MysqlStore = require('express-mysql-session')(session); //require('express-mysql-session')是一個function
+const MysqlStore = require('express-mysql-session')(session); //require('express-mysql-session')是一個function,傳入上面const的session
 const moment = require('moment-timezone');
 //const upload = multer({dest: 'tmp_uploads/'});//上傳目的地設定
 const upload = require('./modules/upload-images');
 const db = require('./modules/connect-mysql');
-const sessionStore = new MysqlStore({}, db); //object本來要設定連線資料庫的設定,現在可以透過套件直接連線到資料庫了
+const sessionStore = new MysqlStore({}, db); //object本來要設定連線資料庫的設定,現在可以透過套件直接連線到資料庫了//Store通常指存放的地方
 
 const app = express();
 
@@ -27,6 +27,7 @@ app.use(session({
     saveUninitialized: false, //初始化設定:新用戶沒有用到session時要不要建立session跟發送cookie
     resave: false,//沒有變更要不要強制回存
     secret: 'fdgopwerkgwerkpoqgbinwoqgrrgdg599wet3zws',
+    store: sessionStore,
     cookie: {
         maxAge: 1800000, //30分鐘--ms
         //設定用戶cookie什麼時候過期
@@ -157,6 +158,7 @@ app.get(/^\/m\/09\d{2}-?\d{3}-?\d{3}$/i, (req, res) => {
 app.use('/admin2', require('./routes/admin2'));//路由模組：當中介器require來用
 app.use('/admin3', require('./routes/admin3'));//路由模組：當中介器require來用
 app.use('/member', require('./routes/member'));
+app.use('/user', require('./routes/user'));
 
 app.get('/try-session', (req, res) => {
     //自定一個參數名:不能叫cookie
