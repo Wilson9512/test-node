@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+    function Person01(name, age) {
+        this.name = name;
+        this.age = age;
+        this.getInfo = function () {
+            return {name: this.name, age: this.age};
+        }
+    }
+
+    const p1 = new Person01('bill', 22);
+    console.log(p1.getInfo());
+    // console.log(p1.getInfo2());
+    // 實體, 個體 instance
+    Person01.prototype.getInfo2 = function () {
+        return JSON.stringify(this.getInfo());
+    }
+
+    console.log(p1.getInfo2());
+    //靜態方法
+    Person01.getInfo = function () {
+        console.log(this);
+        return 'Person01';
+    }
+    console.log(Person01.getInfo());
+
+
+    const myObj = {};
+
+    function abc(a, b){
+        return this.toString() + a + b;
+    }
+
+    //沒加apply是console出[object windows]
+    console.log( abc.apply(myObj, ['a','b']));
+</script>
+</body>
+</html>

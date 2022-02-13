@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+
+    //所有的類型都會繼承頂層的object功能
+    class Animal {
+        constructor(name) {
+            this.name = name;
+            Animal._count = Animal._count || 0;
+            Animal._count++;
+        }
+        move(){
+            return '移動';
+        }
+        info(){
+            return this.name;
+        }
+        toString(){
+            return '名字:' + this.name;
+            //object裡面的功能
+        }
+        static getCount(){
+            return Animal._count || 0;
+        }
+    }
+
+    class Human extends Animal {
+        constructor(name, gender) {
+            super(name);
+            this.gender = gender;
+            //增加屬性要放在super後面
+        }
+        move() {
+            return super.move() + ' 跑步';
+        }
+    }
+
+    const a1 = new Animal('咪嚕');
+    console.log( a1.info() );
+    console.log( '' + a1 );
+    console.log( a1 instanceof Animal );
+    console.log( a1.move() );
+    console.log('---------------------')
+
+    const h1 = new Human('Wil');
+    console.log( h1.info() );
+    console.log( h1.toString() );
+    console.log( h1 instanceof  Animal );
+    console.log( h1.move() );
+
+
+</script>
+</body>
+</html>
